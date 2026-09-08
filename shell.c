@@ -29,6 +29,8 @@ int main(int argc, char *argv[])
       args[++cnt] = strtok(NULL, " ");
     }
 
+    if (args[0] == NULL) continue;
+
     if (strcmp(args[0], "exit") == 0) exit(0);
 
 	  // running the command
