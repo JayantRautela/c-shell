@@ -1,0 +1,20 @@
+# Clang/GCC build files
+*.o
+*.a
+*.so
+*.dylib
+*.out
+
+# Executables
+*.exe
+a.out
+
+# Build directories
+build/
+bin/
+obj/
+
+# Clang/LLVM generated files
+*.bc
+*.ll
+*.d
