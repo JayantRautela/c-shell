@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include <string.h>
 
+int handle_redirect(char *args[]);
+
 int main(int argc, char *argv[])
 {
   while (1)
@@ -43,6 +45,11 @@ int main(int argc, char *argv[])
     }
     else
     {
+      if(handle_redirect(args) == -1)
+      {
+        fprintf(stderr, "could not redirect\n");
+        exit(1);
+      }
       //child
       execvp(args[0], args);
 
@@ -50,4 +57,27 @@ int main(int argc, char *argv[])
       fprintf(stderr, "Could not exec %s\n", buffer);
     }
   }
+}
+
+// handle redirect stdout
+// 1 for success
+// 0 for no redirect
+// -1 for error
+int handle_redirect(char *args[])
+{
+  for (int i = 0; args[i] != NULL; i++)
+  {
+    if (strcmp(args[i], ">") == 0)
+    {
+      // args[i + 1] is the file to write to
+      if(freopen(args[i + 1], "w", stdout) == NULL) return -1;
+
+      if (stdout == NULL) return -1;
+
+      args[i] = NULL;
+
+      return 1;
+    }
+  }
+  return 0;
 }
