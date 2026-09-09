@@ -7,6 +7,8 @@ int handle_redirect(char *args[]);
 
 int main(int argc, char *argv[])
 {
+  // 1 - interactive
+  int mode = 1;
   if (argc > 1)
   {
     // argc[0] - name of script
@@ -16,19 +18,25 @@ int main(int argc, char *argv[])
       fprintf(stderr, "Existing..\n");
       exit(1);
     }
+    mode = 0;
   }
   while (1)
   {
     // array to store the input buffer 
 	  char buffer[1024];
 
-	  printf("$ ");
+	  if(mode) printf("$ ");
 
-	  fgets(buffer, 1024, stdin);
+	  if(fgets(buffer, 1024, stdin) == NULL) break;
 
     char *nl = strchr(buffer, '\n');
 
     if (nl) *nl = '\0';
+
+    // Remove comments
+    char *hash = strchr(buffer, '#');
+
+    if (hash) *hash = '\0';
 
     // splliting the command
     char *args[20];
