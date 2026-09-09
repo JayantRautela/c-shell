@@ -7,6 +7,16 @@ int handle_redirect(char *args[]);
 
 int main(int argc, char *argv[])
 {
+  if (argc > 1)
+  {
+    // argc[0] - name of script
+    if(freopen(argv[1], "r", stdin) == NULL)
+    {
+      fprintf(stderr, "Can't read from script file %s\n",argv[1]);
+      fprintf(stderr, "Existing..\n");
+      exit(1);
+    }
+  }
   while (1)
   {
     // array to store the input buffer 
